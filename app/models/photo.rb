@@ -1,4 +1,8 @@
 class Photo < ApplicationRecord
-  belongs_to :user
   include ImageUploader[:image]
+  # include ActsAsCommentable::Comment
+  belongs_to :user
+  has_many :comments
+  acts_as_votable
+
 end

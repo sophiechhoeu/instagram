@@ -16,5 +16,25 @@
   <%= @photo.caption %>
 </p>
 
+<h2>Add a comment:</h2>
+
+<%= render "comments/comment" %>
+
+
+<%= form_for([@photo, @photo.comments.build]) do |f| %>
+  <div class="field">
+    <%= f.label :comment %><br />
+    <%= f.text_field :content %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
+
+
+
 <%= link_to 'Edit', edit_photo_path(@photo) %> |
 <%= link_to 'Back', photos_path %>

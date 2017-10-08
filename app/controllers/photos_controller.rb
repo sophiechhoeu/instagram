@@ -14,7 +14,8 @@ class PhotosController < ApplicationController
 
   # GET /photos/new
   def new
-    @photo = Photo.new
+    # @photo = Photo.new
+    @photo = current_user.photos.build
   end
 
   # GET /photos/1/edit
@@ -24,8 +25,9 @@ class PhotosController < ApplicationController
   # POST /photos
   # POST /photos.json
   def create
-    @photo = Photo.new(photo_params)
+    @photo = current_user.photos.build(photo_params)
     @photo.user = current_user
+
 
     respond_to do |format|
       if @photo.save
@@ -36,7 +38,27 @@ class PhotosController < ApplicationController
         format.json { render json: @photo.errors, status: :unprocessable_entity }
       end
     end
+
   end
+
+  def upvote
+    @photo = Photo.find(params[:id])
+    @photo.upvote_by current_user
+    redirect_to root_path
+  end
+
+  def downvote
+    @photo = Photo.find(params[:id])
+    @photo.downvote_by current_user
+    redirect_to root_path
+  end
+
+  # def comment
+  #     @photo = Photo.find(params[:id])
+  #     @photo.comments << Photo.new(params[:comment])
+  #     redirect_to root_path
+  # end
+
 
   # PATCH/PUT /photos/1
   # PATCH/PUT /photos/1.json
@@ -72,4 +94,5 @@ class PhotosController < ApplicationController
     def photo_params
       params.require(:photo).permit(:image, :user_id, :caption)
     end
+
 end

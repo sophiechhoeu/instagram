@@ -5,6 +5,11 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'record_tag_helper', '~> 1.0'
+
+
+gem 'acts_as_votable', '~> 0.10.0'
+
 gem 'bootstrap', '~> 4.0.0.beta'
 
 gem 'shrine'
