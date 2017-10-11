@@ -1,8 +1,11 @@
 class Photo < ApplicationRecord
-  include ImageUploader[:image]
-  # include ActsAsCommentable::Comment
-  belongs_to :user
-  has_many :comments
-  acts_as_votable
 
+  belongs_to :user
+  has_many :comments, dependent: :destroy
+  acts_as_votable
+  include ImageUploader[:image]
+
+  def self.search(search)
+    where("caption LIKE ?", "%#{search}%")
+  end
 end

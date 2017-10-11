@@ -1,15 +1,22 @@
 class PhotosController < ApplicationController
   before_action :set_photo, only: [:show, :edit, :update, :destroy]
-
   # GET /photos
   # GET /photos.json
   def index
     @photos = Photo.all
+    @comment = Comment.new
+    if params[:search]
+     @photos = Photo.search(params[:search]).order("created_at DESC") #created_at: :desc
+   else
+     @photos = Photo.all.order("created_at DESC")
+    end
   end
 
   # GET /photos/1
   # GET /photos/1.json
   def show
+    @photo.user = current_user
+    redirect_to root_path
   end
 
   # GET /photos/new
@@ -53,6 +60,8 @@ class PhotosController < ApplicationController
     redirect_to root_path
   end
 
+
+
   # def comment
   #     @photo = Photo.find(params[:id])
   #     @photo.comments << Photo.new(params[:comment])
@@ -74,14 +83,15 @@ class PhotosController < ApplicationController
     end
   end
 
+
   # DELETE /photos/1
   # DELETE /photos/1.json
   def destroy
-    @photo.destroy
-    respond_to do |format|
-      format.html { redirect_to photos_url, notice: 'Photo was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+     @photo.destroy
+     respond_to do |format|
+       format.html { redirect_to photos_url, notice: 'Photo was successfully destroyed.' }
+       format.json { head :no_content }
+     end
   end
 
   private
