@@ -1,5 +1,27 @@
 <p id="notice"><%= notice %></p>
 
+<div class="card" style="width: 20rem;">
+  <img class="card-img-top" src="<%= @photo.image_url %>" alt="Card image cap">
+  <div class="card-block">
+    <%= @photo.user.username %>
+    <h6 class="card-title"><%= @photo.caption %></h6>
+
+    <%= render "comments/comment" %>
+
+    <%= form_for([@photo, @photo.comments.build]) do |f| %>
+    <div class="field">
+      <%= f.label :comments %><br/>
+      <%= f.text_field :content %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+    <% end %>
+  </div>
+</div>
+
+<!--
 <p>
   <strong>Image data:</strong>
   <%= @photo.image_data %>
@@ -16,5 +38,23 @@
   <%= @photo.caption %>
 </p>
 
-<%= link_to 'Edit', edit_photo_path(@photo) %> |
+<h2>Add a comment:</h2>
+
+<%= render "comments/comment" %>
+
+
+<%= form_for([@photo, @photo.comments.build]) do |f| %>
+  <div class="field">
+    <%= f.label :comment %><br />
+    <%= f.text_field :content %>
+  </div>
+
+  <div class="actions">
+    <%#= f.submit %>
+  </div>
+<% end %> -->
+
+<%= link_to 'Destroy', @photo, method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Edit', edit_photo_path(@photo) %>
+|
 <%= link_to 'Back', photos_path %>

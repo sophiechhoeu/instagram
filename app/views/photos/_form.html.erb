@@ -14,11 +14,7 @@
   <div class="field">
     <%= form.label :image %>
     <%= form.file_field :image, id: :photo_image_data %>
-  </div>
-
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id, id: :photo_user_id %>
+    <%= form.hidden_field :photo_id %>
   </div>
 
   <div class="field">
