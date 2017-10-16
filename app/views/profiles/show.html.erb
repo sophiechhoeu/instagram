@@ -1,0 +1,44 @@
+<%= render 'partials/navbar' %>
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+  <div class="col">
+    <div class=""><%= image_tag(@profile.avatar_url, class: 'img-thumbnail img-fluid profile-pic', alt: 'Responsive image') %></div>
+  </div>
+  <div class="col-6 col-sm-12 col-lg-6">
+    <div class="user-profile"><%= current_user.profile.name %>
+      <%= link_to 'Edit Profile', edit_profile_path(@profile), class:"btn btn-outline-secondary", type: 'button'%>
+    </div>
+    <div class="about-me">
+      <span class="">posts</span>
+      <span class="">followers</span>
+      <span class="">following</span>
+    </div>
+    <div class="profile-bio">
+      <span class="bio-name"></span><%= current_user.profile.name %>
+      <span class="bio-info"></span><%= current_user.profile.bio %>
+    </div>
+  </div>
+  <div class="col">
+  </div>
+</div><!--end of row -->
+
+<% @photos.each_slice(3) do |photo|%>
+  <div class="row">
+    <div class="card-deck profile-pics">
+      <% photo.each do |photo|%>
+        <div class="card profile-pics">
+          <%= image_tag photo.image_url, class: 'card-img-top', style: 'width: 20rem' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+
+
+
+
+
+<p class="footer"><%= link_to 'Edit', edit_profile_path(@profile) %> |
+<%= link_to 'Back', profile_path %> </p>

@@ -15,6 +15,15 @@ color: black;
     color: black;
 }
 
+.profile-pic {
+  border-radius: 50%;
+}
+
+.img-thumbnail {
+  border-style: none;
+  margin-left: 20px;
+}
+
 .font-logo{
   color: black;
 }
@@ -29,6 +38,38 @@ color: black;
   font-weight: 600;
 }
 
+.profile-pics{
+  margin-top: 30px;
+  margin-left: 10px;
+}
+
+.card-img-top{
+  margin: 0 auto;
+  width: 100%;
+}
+
+.user-profile {
+  font-size: 45px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: lighter;
+  margin-left: 20px;
+}
+
+.about-me{
+  margin-left: 20px;
+}
+
+.profile-bio{
+  margin-left: 20px;
+}
+
+.add-new{
+  vertical-align: baseline;
+}
+
+.timestamp {
+  font-size: 12px;
+}
 
 
 // .edit-btn{
@@ -54,14 +95,14 @@ color: black;
 }
 
 .profile-name {
-  font-family: 'Proxima Nova',Georgia;
+  font-family: 'Roboto', sans-serif;
   font-weight: 600;
   font-size: 16px;
   margin-left: 10px;
 }
 
 .postfont {
-  font-family: 'Proxima Nova',Georgia;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 18px;
   margin-left: 10px;
@@ -69,14 +110,15 @@ color: black;
 
 .username {
   margin-left: 10px;
-  font-family: 'Proxima Nova',Georgia;
+  font-family: 'Roboto', sans-serif;
   font-weight: 600;
   font-size: 16px;
 }
 
 
+
 body {
-  font-family: 'Proxima Nova',Georgia;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   margin-bottom: 50px;
 

@@ -4,6 +4,7 @@ class PhotosController < ApplicationController
   # GET /photos.json
   def index
     @photos = Photo.all
+    @profile = Profile.all
     @comment = Comment.new
     if params[:search]
      @photos = Photo.search(params[:search]).order("created_at DESC") #created_at: :desc
@@ -27,6 +28,7 @@ class PhotosController < ApplicationController
 
   # GET /photos/1/edit
   def edit
+    @photo.user = current_user
   end
 
   # POST /photos

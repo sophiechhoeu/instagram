@@ -1,22 +1,20 @@
 <nav class="navbar navbar-expand navbar-light bg-light sticky-top">
-  <a class="navbar-brand" href="/"><%=image_tag("instagram-glyph.svg")%></a>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <%= link_to (image_tag("instagram-glyph.svg", class:"nav-brand")), root_path %>
+  <div class="d-inline-flex collapse navbar-collapse " id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link billabong" href="/"> Sophstagram</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href=""> <%= link_to (image_tag("add_new.svg", class: "d-flex ",)), new_photo_path %></a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <%= form_tag(root_path, method: "get", id: "search-form") do %>
         <%= text_field_tag :search, params[:search], placeholder: "Search" %>
       <% end %>
-      <% if @photos.blank? %>
-        <h6>There are no searches containing the term
-          <%= params[:search] %></h6>
-      <% end %>
     </form>
+    <div class="add-new"><%= link_to (image_tag("user_profile.svg", class:"nav-link")), profile_path %></div>
+    <div class="add-new"><%= link_to (image_tag("add_new.svg", class: "nav-link")), new_photo_path %></div>
+    <div class="login">
+      <%= render 'partials/userlogin' %>
+   </div>
   </div>
 </nav>
