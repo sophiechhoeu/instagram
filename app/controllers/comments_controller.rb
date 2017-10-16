@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+
   before_action :set_photo
 
 
@@ -58,5 +59,6 @@ class CommentsController < ApplicationController
 
   def set_photo
     @photo = Photo.find(params[:photo_id])
+
   end
 end
