@@ -11,8 +11,12 @@ class ProfilesController < ApplicationController
   # GET /profiles/1.json
   def show
     # @profile.user = current_user
+
+    # puts "22222222222222222"
+    # puts @profile
+    # puts "2222222222222222"
     @photos = current_user.photos
-    redirect_to edit_profile_path if @profile.nil?
+
 
     # @profile = Profile.find(user_id: current_user.id)
   end
@@ -25,7 +29,7 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1/edit
   def edit
-    @profile = Profile.new(user: current_user)
+    @profile = Profile.find_by(:user => current_user.id)
   end
 
   # POST /profiles
@@ -47,13 +51,22 @@ class ProfilesController < ApplicationController
   # PATCH/PUT /profiles/1
   # PATCH/PUT /profiles/1.json
   def update
+    puts "----profile_params is: #{profile_params}"
+    puts "----params is: #{params}"
     respond_to do |format|
+
+      # debug later why user param is empty in performing_follow method
+      # if performing_follow?
+      #    @profile.user.toggle_followed_by(current_user)
+      #    format.html { redirect_to @profile.user }
+      #    format.json { render :show, status: :ok, location: @profile }
+
       if @profile.update(profile_params)
-        format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
-        format.json { render :show, status: :ok, location: @profile }
+          format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
+          format.json { render :show, status: :ok, location: @profile }
       else
-        format.html { render :edit }
-        format.json { render json: @profile.errors, status: :unprocessable_entity }
+          format.html { render :edit }
+          format.json { render json: @profile.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -70,17 +83,34 @@ class ProfilesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_profile
-      if params[:id]
-        @profile = Profile.find(params[:id])
-      else
-        @profile = Profile.find_by(user: current_user)
+      def set_profile
+        if params[:id]
+          #find a user by profile
+          @profile = Profile.find_by(user: params[:id])
+          puts "33333333333333333333"
+          puts @profile
+          puts "33333333333333333333"
+
+
+        else
+          #the signed in user's profile
+          @profile = Profile.find_by(:user => current_user.id)
+
+          puts "33333333333333333333"
+          puts @profile
+          puts "33333333333333333333"
+        end
+
       end
 
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def profile_params
-      params.require(:profile).permit(:avatar, :name, :bio, :user_id)
-    end
+      # Never trust parameters from the scary internet, only allow the white list through.
+      def profile_params
+        params.require(:profile).permit(:avatar, :name, :bio, :user_id)
+      end
+
+      def performing_follow?
+          params.require(:user)[:toggle_follow].present?
+      end
+
 end

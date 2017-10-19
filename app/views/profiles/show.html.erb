@@ -3,37 +3,46 @@
 
 <div class="row">
   <div class="col">
-    <div class=""><%= image_tag(@profile.avatar_url, class: 'img-thumbnail img-fluid profile-pic', alt: 'Responsive image') %></div>
+    <div class=""><%= image_tag(@profile.avatar_url, class: 'img-thumbnail img-fluid', alt: 'Responsive image') %></div>
   </div>
-  <div class="col-6 col-sm-12 col-lg-6">
-    <div class="user-profile"><%= current_user.profile.name %>
-      <%= link_to 'Edit Profile', edit_profile_path(@profile), class:"btn btn-outline-secondary", type: 'button'%>
+  <div class="col-12 col-lg-6">
+    <div class="user-profile"><%= @profile.user.username %>
+
+      <% if @profile.user == current_user %>
+        <%= link_to 'Edit Profile', edit_profile_path(@profile), class:'btn btn-outline-secondary' %>
+      <% else %>
+        <%= form_with(model: @profile.user, method: :patch) do | form | %>
+          <%= form.hidden_field :toggle_follow, value: true %>
+          <%= form.button @profile.user.followed_by?(current_user) ? 'unfollow' : 'follow', class: 'btn btn-primary align-text-bottom' %>
+        <% end %>
+      <% end %>
     </div>
+
+
+
     <div class="about-me">
-      <span class="">posts</span>
-      <span class="">followers</span>
-      <span class="">following</span>
+      <span class=""><%= @profile.user.photos.count%></span> posts
+      <span class=""><%= @profile.user.followers.count%></span> followers
+      <span class=""><%= @profile.user.following.count%></span> following
     </div>
+
     <div class="profile-bio">
-      <span class="bio-name"></span><%= current_user.profile.name %>
-      <span class="bio-info"></span><%= current_user.profile.bio %>
+      <strong><%= @profile.user.username %></strong>
+      <span class="bio-info"><%= @profile.bio %></span>
     </div>
-  </div>
+  </div><!--end of user profile -->
   <div class="col">
   </div>
 </div><!--end of row -->
 
-<% @photos.each_slice(3) do |photo|%>
-  <div class="row">
-    <div class="card-deck profile-pics">
-      <% photo.each do |photo|%>
-        <div class="card profile-pics">
-          <%= image_tag photo.image_url, class: 'card-img-top', style: 'width: 20rem' %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-<% end %>
+
+        <div class="container">
+            <% @profile.user.photos.each do |photo|%>
+            <img class ="col-4 col-md-4 photo-col" src='<%=photo.image_url%>'>
+            <% end %>
+          </div>
+
+
 
 
 

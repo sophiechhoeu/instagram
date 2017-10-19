@@ -15,14 +15,47 @@ color: black;
     color: black;
 }
 
-.profile-pic {
-  border-radius: 50%;
+.photo-col {
+  max-width: 32%;
+}
+
+.bio-name {
+  font-style: bold;
 }
 
 .img-thumbnail {
   border-style: none;
   margin-left: 20px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
 }
+
+.login-logo {
+  text-align: center;
+}
+
+.login-field {
+  text-align: center;
+}
+
+.login-card {
+  margin: 0 auto;
+  width: 100%
+}
+
+.signup{
+  margin-top: 10px;
+  align-items: center;
+}
+
+.profile-pic {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+}
+
+
 
 .font-logo{
   color: black;
@@ -43,9 +76,12 @@ color: black;
   margin-left: 10px;
 }
 
+
 .card-img-top{
   margin: 0 auto;
   width: 100%;
+  height: 100%;
+  border-radius: none;
 }
 
 .user-profile {
@@ -81,9 +117,6 @@ color: black;
   // margin-right: 20px;
 }
 
-.card-img-top{
-  border-radius: none;
-}
 
 .card-title {
   height: 64px;
@@ -124,12 +157,6 @@ body {
 
 }
 
-// #search-form input {
-//   width: 320px;
-//   height: 50px;
-//   position:relative;
-// }
-
 .field{
   margin-left: 10px;
   margin-bottom: 10px;
@@ -152,4 +179,8 @@ body {
 .comment-body {
   border-top-style: solid;
   border-width: 2px;
+}
+
+.sign-up{
+  text-align: center;
 }
