@@ -1,6 +1,7 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
 
+
   # GET /profiles
   # GET /profiles.json
   def index
@@ -10,13 +11,14 @@ class ProfilesController < ApplicationController
   # GET /profiles/1
   # GET /profiles/1.json
   def show
-    # @profile.user = current_user
+    if params[:id]
+      @profile = Profile.find_by!(user: params[:id])
+      @photos = @profile.user.photos
 
-    # puts "22222222222222222"
-    # puts @profile
-    # puts "2222222222222222"
-    @photos = current_user.photos
-
+    else
+      @photos = current_user.photos
+      @profile = current_user.profile
+    end
 
     # @profile = Profile.find(user_id: current_user.id)
   end
@@ -29,7 +31,7 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1/edit
   def edit
-    @profile = Profile.find_by(:user => current_user.id)
+    #@profile = Profile.find_or_initialize_by(:user => current_user)
   end
 
   # POST /profiles
@@ -51,17 +53,23 @@ class ProfilesController < ApplicationController
   # PATCH/PUT /profiles/1
   # PATCH/PUT /profiles/1.json
   def update
-    puts "----profile_params is: #{profile_params}"
-    puts "----params is: #{params}"
+
+
+
+    # we fetch that user
+    # user = User.find(param)
+    # user.followers << current_user
+
+
+    # @profile.user.followers << current_user
     respond_to do |format|
 
       # debug later why user param is empty in performing_follow method
-      # if performing_follow?
-      #    @profile.user.toggle_followed_by(current_user)
-      #    format.html { redirect_to @profile.user }
-      #    format.json { render :show, status: :ok, location: @profile }
-
-      if @profile.update(profile_params)
+      if performing_follow?
+         @profile.user.toggle_followed_by(current_user)
+        #  format.html { redirect_to @profile.user }
+        #  format.json { render :show, status: :ok, location: @profile }
+      elsif @profile.update(profile_params)
           format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
           format.json { render :show, status: :ok, location: @profile }
       else
@@ -86,19 +94,19 @@ class ProfilesController < ApplicationController
       def set_profile
         if params[:id]
           #find a user by profile
-          @profile = Profile.find_by(user: params[:id])
-          puts "33333333333333333333"
-          puts @profile
-          puts "33333333333333333333"
+          @profile = Profile.find_by(user_id: params[:id])
+          # puts "33333333333333333333"
+          # puts @profile
+          # puts "33333333333333333333"
 
 
         else
           #the signed in user's profile
           @profile = Profile.find_by(:user => current_user.id)
 
-          puts "33333333333333333333"
-          puts @profile
-          puts "33333333333333333333"
+          # puts "33333333333333333333"
+          # puts @profile
+          # puts "33333333333333333333"
         end
 
       end
@@ -110,7 +118,7 @@ class ProfilesController < ApplicationController
       end
 
       def performing_follow?
-          params.require(:user)[:toggle_follow].present?
+          params.dig(:user, :toggle_follow).present?
       end
 
 end

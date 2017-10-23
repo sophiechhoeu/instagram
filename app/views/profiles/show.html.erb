@@ -3,18 +3,21 @@
 
 <div class="row">
   <div class="col">
-    <div class=""><%= image_tag(@profile.avatar_url, class: 'img-thumbnail img-fluid', alt: 'Responsive image') %></div>
+    <div class="col-12"><%= image_tag(@profile.avatar_url, class: 'img-thumbnail img-fluid', alt: 'Responsive image') %></div>
   </div>
-  <div class="col-12 col-lg-6">
-    <div class="user-profile"><%= @profile.user.username %>
+  <div class="col-12 col-lg-6 col-md-6">
+    <div class="user-profile"><%= @profile.name %>
 
-      <% if @profile.user == current_user %>
+
+      <% if @profile.user.id == current_user.id %>
         <%= link_to 'Edit Profile', edit_profile_path(@profile), class:'btn btn-outline-secondary' %>
-      <% else %>
+      <% else#if params[:id] != current_user.id %>
         <%= form_with(model: @profile.user, method: :patch) do | form | %>
           <%= form.hidden_field :toggle_follow, value: true %>
+          <!-- we need to send the user that we're going to follow -->
           <%= form.button @profile.user.followed_by?(current_user) ? 'unfollow' : 'follow', class: 'btn btn-primary align-text-bottom' %>
-        <% end %>
+          <% end %>
+
       <% end %>
     </div>
 
@@ -27,7 +30,7 @@
     </div>
 
     <div class="profile-bio">
-      <strong><%= @profile.user.username %></strong>
+      <strong><%= @profile.name %></strong>
       <span class="bio-info"><%= @profile.bio %></span>
     </div>
   </div><!--end of user profile -->
@@ -49,5 +52,4 @@
 
 
 
-<p class="footer"><%= link_to 'Edit', edit_profile_path(@profile) %> |
-<%= link_to 'Back', profile_path %> </p>
+<p class="profile-footer"><%= link_to 'Back', profile_path %> </p>
