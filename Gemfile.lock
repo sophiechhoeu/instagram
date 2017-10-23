@@ -68,6 +68,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
+    colorize (0.8.1)
     concurrent-ruby (1.0.5)
     crass (1.0.2)
     devise (4.3.0)
@@ -212,6 +213,7 @@ DEPENDENCIES
   byebug
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
+  colorize
   devise
   jbuilder (~> 2.5)
   jquery-rails
